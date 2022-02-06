@@ -10,12 +10,23 @@
  */
 class Solution {
 public:
-    int operator [] (listNode*, int)
-    {
-        
+    ListNode* indexing(ListNode* node2Find, int i){
+        int count = 0;
+        while(count < i)
+        {
+            node2Find = node2Find->next;
+            count++;
+        }
+        return node2Find;
     }
+    
+//Below is main code
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        cout<<l1.val<<endl;
+        ListNode* l3 = new ListNode;
+        ListNode* target = NULL;
         
+        cout<<target->val<<endl;
+        
+        return l1;
     }
 };

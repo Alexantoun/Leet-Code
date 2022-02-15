@@ -10,7 +10,7 @@ public:
 
         if(x>0)
         {
-            int maxPower=0, divPower = 1;
+            int maxPower=0
             int notX = x, stopper;
             maxPower = static_cast<int>(log10(x));
             stopper = int((maxPower+1)/2);

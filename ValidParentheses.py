@@ -1,32 +1,30 @@
+from xml.dom.minicompat import EmptyNodeList
+
+
 class Solution:
     def isValid(self, s: str) -> bool:
-        parenth = 0
-        brack = 0
-        brace = 0
+        stack = []
+        more = True 
         for x in range(0,len(s)):
-            print(x)
-            
-        for x in range(0, len(s)):
-            if x == "(":
-                parenth+=1
-            elif x == ")":
-                parenth-=1
-            elif x=="[":
-                brack+=1
-            elif x=="]":
-                brack-=1
-            elif x=="{":
-                brace+=1
-            elif x=="}":
-                brace-=1
-            if brack < 0 or parenth < 0 or brace < 0:
-                print("false")
+            if s[x] == '(' or s[x]=='[' or s[x]== '{':
+                stack.append(s[x])
+            elif len(stack)>0:
+                curr = stack.pop()
+                if s[x]==')' and curr!='(':
+                    more = False
+                    break
+                elif s[x]==']' and curr!='[':
+                    more = False
+                    break
+                elif s[x]=='}' and curr!='{':
+                    more = False
+                    break
+            else:
+                more = False
                 break
 
-        if brack==0 and parenth==0 and brace==0:
-            print("true")
+        if more and len(stack) == 0:
+            return True
         else:
-            print("false")
-        
-            
+            return False
         

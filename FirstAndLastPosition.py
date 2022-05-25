@@ -3,36 +3,62 @@ class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         print(nums)
         found = False 
+        notFound = [-1,-1]
         length = len(nums)
-        divisor = 1/2
-        n = int(length/2)
+        start = 0
+        end = length-1
+        avgIndex = int(end/2)
+        #Finge cases
         if length == 0:
-            return [-1,-1]
-        elif length == 1 and nums[0]==target:
-            return [0,0]
+            return notFound
+        elif length == 1:
+            if nums[0] == target:
+                return [0,0]
+            else:
+                return notFound
         elif nums[-1] < target:
-            return [-1,-1]
-        elif nums[-1] == target:
-            n = length-1
-            
-        while not found and n>0:   #Find starting index of 'target'
-            #print(f'the value of n is {n}, and the value of nums[n] is {nums[n]}')
-            if nums[n]>target:
-                n = int(n/2)
-            elif nums[n]<target:
-                n = n + int(n*divisor)
-            if nums[n] == target:
-                while n-1 >=0 and nums[n-1]==target:
-                    n = n-1
-                found = True 
-            divisor *= 1/2
+            return notFound
+        elif nums[0] > target:
+            return notFound
+        elif nums[avgIndex]<target:
+            start = avgIndex
+        elif nums[avgIndex]> target:
+            end = avgIndex
+        elif nums[avgIndex] == target:
+             start = avgIndex
+             while start-1 >= 0 and nums[start-1]==target:
+                 start -= 1
+             end = avgIndex
+             while end+1 <= length-1 and nums[end + 1]==target:
+                 end +=1
+             return [start, end]
 
-        if not found:
-            return [-1,-1]
+        while not found and start!=end:
+            #print(start, ' ',end)
+            avgIndex = int((start+end)/2)
+            if nums[avgIndex]>=target and nums[end]!=target:
+                end = avgIndex
+                if nums[end-1]<target and nums[end]>target:
+                    return notFound
+            if nums[avgIndex]<=target and nums[start]!=target:
+                start = avgIndex
+                if nums[start+1]>target and nums[start]<target:
+                    return notFound
+                elif nums[start+1]==target:
+                    start+=1
 
-        solution = list()
-        solution.append(n)
-        while n+1 < length and nums[n+1] == target:    #Find ending index of 'target'
-            n = n+1
-        solution.append(n)
-        return solution
+            if nums[start] == target:
+                while (start-1>0 and nums[start-1] == target):
+                        start-=1
+            if nums[end] == target:
+                while (end+1 < length-1 and nums[end+1]==target):
+                    end+=1
+
+            if nums[start] == target and nums[end] == target:
+                found = True
+        
+        return [start,end]
+                    
+                
+
+                
